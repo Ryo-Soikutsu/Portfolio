@@ -27,7 +27,9 @@
         <div class="projects">
           {#each job.projects as project}
             <div class="sub-project">
+              {#if project.logo}
               <img src={project.logo} alt={project.name} />
+              {/if}
               <p>{project.name} {project.description}</p>
             </div>
           {/each}
@@ -130,7 +132,7 @@
           p {
             font-size: 0.8rem;
             min-width: 3rem;
-            max-width: 4rem;
+            max-width: 8rem;
             margin: 0.2rem 0;
             text-align: center;
             word-break: break-word;

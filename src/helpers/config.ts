@@ -86,13 +86,14 @@ const config: SiteConfig = {
     },
   },
   workExperience: [
+    /*
     {
-      company: 'AND.Digital',
-      companyUrl: 'https://and.digital/',
-      companyLogo: 'https://and.digital/favicon.ico',
+      company: 'ACME Corporation',
+      companyUrl: 'https://acme.local/',
+      companyLogo: 'https://acme.local/favicon.ico',
       jobTitle: 'Principle Engineer',
       datesWorked: 'August 2022 - Present',
-      responsibilities: 'As a member of the Practice Group within Hamilton Club, '
+      responsibilities: 'As a member of the Practice Group within ACME Corporation, '
       + 'I work across several client projects, ensuring that '
       + 'code quality, maintainability and security are top notch. '
       + 'I\'m responsible for training up our developers, helping them gain '
@@ -101,12 +102,52 @@ const config: SiteConfig = {
       + 'to choose the best tech stacks on a per-client basis.',
       projectType: 'Clients',
       projects: [
-        { name: 'International SOS', logo: 'https://i.ibb.co/WgKKMFQ/Isos.jpg', description: '', },
-        { name: 'Frasers Group', logo: 'https://i.ibb.co/sQcvxmG/Frasers.png', description: '', },
-        { name: 'Lloyds Bank', logo: 'https://i.ibb.co/GCSDPCq/Lloyds-bank.jpg', description: '', },
+        { name: 'IPC LLC', logo: 'https://ipc.corp/icon.jpg', description: '', },
+        { name: 'Trailblazers Corp', logo: 'https://astral.express', description: '', }
       ],
       technologies: [ 'TypeScript', 'React Native', 'Azure' ],
     },
+    */    
+    {
+      company: 'NYP InfoSec Club (Special Interest Group)',
+      companyUrl: '',
+      companyLogo: 'src/content/img/logo_nyp_infosec.jpg',
+      jobTitle: 'Vice-President',
+      datesWorked: 'Dec 2024 - Present',
+      responsibilities: 'Leading the planning, coordinating and execution of cybersecurity workshops and '
+        + 'events, and collaboration in events with external partners and organizations',
+      projectType: 'Events',
+      projects: [
+        {
+          name: 'Bi-annual CTFs',
+          description: ''
+        },
+        {
+          name: 'Workshops',
+          description: ''
+        },
+        {
+          name: 'External events and workshops',
+          description: ''
+        }
+      ]
+    },
+    {
+      company: 'Yes But No (Student Group)',
+      companyUrl: 'https://www.yes-but-no.org',
+      companyLogo: 'src/content/img/logo_ybn.jpeg',
+      jobTitle: 'Core Team Member / Challenge Creator',
+      datesWorked: 'January 2022 - Present',
+      responsibilities: 'Organizing and participating in Capture-The-Flag (CTF) competitions, challenge '
+        + 'creation and vetting for CTFs. Volunteering and representing YBN in cybersecurity events and workshops.',
+      projectType: 'Projects',
+      projects: [
+        {
+          name: 'Capture-The-Flag Challenges',
+          description: ''
+        }
+      ]
+    }
   ],
   projectComplimentaryData: [
       
@@ -182,6 +223,10 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
         source: ['https://github.com/OJ/gobuster', 'https://github.com/ffuf/ffuf']
       },
       {
+        tool: 'Burp Suite',
+        source: ['https://portswigger.net/burp/communitydownload']
+      },
+      {
         tool: 'PowerShell Empire',
         source: ['https://github.com/EmpireProject/Empire']
       },
@@ -233,7 +278,7 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
         language: 'PHP'
       },
       {
-        language: 'JavaScript (Vanilla)'
+        language: 'JavaScript'
       },
       {
         language: 'Docker'

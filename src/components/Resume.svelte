@@ -10,18 +10,9 @@
 
 <Heading level="h2" color="var(--foreground)">Resume</Heading>
 
-<p>
-  My curriculum vitae can be viewed at
-  <a href="https://cv.aliciasykes.com" target="_blank">cv.aliciasykes.com</a>
-</p>
-
-<p>A shortened PDF version can be downloaded below ↓</p>
-<Button click={() => window.location.href = "https://cv.aliciasykes.com/download" }>
-  <Icon name="download" />
-  Download CV
-</Button>
-
-<small>Source code for CV is hosted at <a href="https://github.com/lissy93/cv">github.com/lissy93/cv</a></small>
+<a class="download-btn" href="src/content/files/resume.pdf" download="resume.ryosoikutsu.pdf" role="button">
+  Download Resume
+</a>
 
 <style lang="scss">
   a {
@@ -32,4 +23,15 @@
     margin-top: 1rem; 
     opacity: 0.6;
   }
+  .download-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .download-btn:active {
+    transform: translateY(1px);
+  }
+
 </style>
