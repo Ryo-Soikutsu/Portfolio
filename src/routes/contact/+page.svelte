@@ -51,7 +51,7 @@
       </button>
     {/if}
   </div>
-  <EmailForm />
+  <!-- <EmailForm /> -->
   <PGPKeys />
 </section>
 

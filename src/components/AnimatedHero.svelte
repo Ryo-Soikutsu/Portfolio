@@ -13,12 +13,11 @@
     const lines = [
       'Hello 👋',
       '\n',
-      'I\'m Alicia',
-      'I build apps 🛠️',
-      'that put you first 🥇',
-      'with privacy at the core 🔐',
-      'and clear and helpful documentation 📚',
-      'Thanks for visiting 🥰'
+      'I\'m Ryo Soikutsu',
+      'I like cybersecurity 🛡️⚔️',
+      'Participating in CTFs🚩',
+      'And hosting events and workshops',
+      'Thanks for visiting❤️'
     ];
 
     const typeWithVariableSpeed = (instance: TypeIt, text: string) => {
@@ -42,7 +41,6 @@
     typeLineBreak(typeItInstance);
 
     typeWithVariableSpeed(typeItInstance, lines[3]);
-    typeItInstance.pause(500).move(-8).type(' free').pause(500).type(' and open source').pause(100).move(8);
     typeLineBreak(typeItInstance);
 
     typeWithVariableSpeed(typeItInstance, lines[4]);
@@ -50,11 +48,8 @@
     typeWithVariableSpeed(typeItInstance, lines[5]);
     typeLineBreak(typeItInstance);
     typeWithVariableSpeed(typeItInstance, lines[6]);
-    // typeItInstance.pause(500).delete(9).pause(500).type('time ⌚').pause(500).delete(11).type('you 🫵');
-    typeLineBreak(typeItInstance);
     typeLineBreak(typeItInstance);
     
-    typeWithVariableSpeed(typeItInstance, lines[7]);
     typeItInstance.pause(500).go();
 
   });

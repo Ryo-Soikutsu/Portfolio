@@ -1,16 +1,5 @@
 export const SupportedSocials: readonly string[] = [
-  'Twitter',
   'GitHub',
-  'Dev.to',
-  'Mastodon',
-  'LinkedIn',
-  'Instagram',
-  'YouTube',
-  'Reddit',
-  'StackOverflow',
-  'KeyBase',
-  'Facebook',
-  'PeerList',
 ] as const;
 
 export interface SocialNetwork {
