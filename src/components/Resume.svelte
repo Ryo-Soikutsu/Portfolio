@@ -11,6 +11,7 @@
 <Heading level="h2" color="var(--foreground)">Resume</Heading>
 
 <a class="download-btn" href="src/content/files/resume.pdf" download="resume.ryosoikutsu.pdf" role="button">
+  <Icon name="download" />
   Download Resume
 </a>
 

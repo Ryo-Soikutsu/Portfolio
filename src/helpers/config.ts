@@ -349,6 +349,10 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
       {
         tool: 'VirtualBox',
         source: ['https://www.virtualbox.org/']
+      },
+      {
+        tool: 'GitBook',
+        source: ['https://www.gitbook.com']
       }
     ]
   },

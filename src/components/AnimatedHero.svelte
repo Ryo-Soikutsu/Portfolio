@@ -17,6 +17,7 @@
       'I like cybersecurity 🛡️⚔️',
       'Participating in CTFs🚩',
       'And hosting events and workshops',
+      '\n',
       'Thanks for visiting❤️'
     ];
 
@@ -47,7 +48,8 @@
     typeLineBreak(typeItInstance);
     typeWithVariableSpeed(typeItInstance, lines[5]);
     typeLineBreak(typeItInstance);
-    typeWithVariableSpeed(typeItInstance, lines[6]);
+
+    typeWithVariableSpeed(typeItInstance, lines[7]);
     typeLineBreak(typeItInstance);
     
     typeItInstance.pause(500).go();
