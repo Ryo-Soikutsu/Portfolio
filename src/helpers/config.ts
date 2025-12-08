@@ -302,7 +302,7 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
         tool: 'Windows 10/11'
       },
       {
-        tool: 'CentOS 9',
+        tool: 'CentOS',
         source: ['https://www.centos.org/']
       },
       {
@@ -349,10 +349,6 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
       {
         tool: 'VirtualBox',
         source: ['https://www.virtualbox.org/']
-      },
-      {
-        tool: 'GitBook',
-        source: ['https://www.gitbook.com']
       }
     ]
   },
