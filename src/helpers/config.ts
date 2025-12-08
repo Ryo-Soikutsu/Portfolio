@@ -111,7 +111,7 @@ const config: SiteConfig = {
     {
       company: 'NYP InfoSec Club (Special Interest Group)',
       companyUrl: '',
-      companyLogo: 'src/content/img/logo_nyp_infosec.jpg',
+      companyLogo: '/content/img/logo_nyp_infosec.jpg',
       jobTitle: 'Vice-President',
       datesWorked: 'Dec 2024 - Present',
       responsibilities: 'Leading the planning, coordinating and execution of cybersecurity workshops and '
@@ -135,7 +135,7 @@ const config: SiteConfig = {
     {
       company: 'Yes But No (Student Group)',
       companyUrl: 'https://www.yes-but-no.org',
-      companyLogo: 'src/content/img/logo_ybn.jpeg',
+      companyLogo: '/content/img/logo_ybn.jpeg',
       jobTitle: 'Core Team Member / Challenge Creator',
       datesWorked: 'January 2022 - Present',
       responsibilities: 'Organizing and participating in Capture-The-Flag (CTF) competitions, challenge '
@@ -206,7 +206,7 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
 
       `Aside from studies, I enjoy playing video games, particularly technical Minecraft modpacks and space MMOs. `
     ],
-    picture: 'src/content/img/about.jpg',
+    picture: '/content/img/about.jpg',
   },
   techStack: {
     'Red Team': [
