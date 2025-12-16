@@ -7,29 +7,32 @@
     formatTitle,
     putCommasInBigNum,
     getMonthYear,
-    calculateTimeAgo
+    calculateTimeAgo,
   } from './card-helpers';
 
   export let repo: Project;
-
 </script>
 
 <div class="project-row">
-
   <!-- Image -->
   {#if repo.thumbnail}
-    <img class="thumbnail" src="{repo.thumbnail}" alt="Screenshot of {repo.name}" width="300" />
+    <img
+      class="thumbnail"
+      src={repo.thumbnail}
+      alt="Screenshot of {repo.name}"
+      width="300"
+    />
   {/if}
 
   <!-- Main content -->
   <div class="row-left">
-
     <!-- Project name, and fork badge if applicable -->
     <h2>
       {formatTitle(repo.name)}
+      {#if repo.featured}⭐{/if}
       {#if repo.isFork}<span class="is-fork-label">Fork</span>{/if}
     </h2>
-  
+
     <!-- Project description -->
     <p class="repo-description">
       {#if repo.description}
@@ -39,7 +42,7 @@
       {/if}
     </p>
 
-    <div class="lower-row">  
+    <div class="lower-row">
       <!-- Project stats -->
       <div class="repo-info">
         <!-- Programming language badge -->
@@ -71,7 +74,10 @@
           </div>
         {/if}
         {#if repo.license && (repo.featured || repo.stars <= 3)}
-          <div class="info-item license-type" title="Licensed under {repo.license}">
+          <div
+            class="info-item license-type"
+            title="Licensed under {repo.license}"
+          >
             {repo.license.replace('License', '')}
             <Icon name="license" color="var(--foreground)" />
           </div>
@@ -87,7 +93,9 @@
         <!-- Dates created and last updated -->
         <div class="info-item date-info">
           <p title={repo.createdAt}>Created {getMonthYear(repo.createdAt)}</p>
-          <p title={repo.updatedAt}>Updated {calculateTimeAgo(repo.updatedAt)}</p>
+          <p title={repo.updatedAt}>
+            Updated {calculateTimeAgo(repo.updatedAt)}
+          </p>
         </div>
       </div>
       <!-- Project link buttons -->
@@ -113,7 +121,6 @@
   </div>
 </div>
 
-
 <style lang="scss">
   .project-row {
     background: var(--card-background);
@@ -124,7 +131,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      margin: 0 var(--grid-item-spacing);;
+      margin: 0 var(--grid-item-spacing);
       justify-content: space-between;
       min-width: 20rem;
       .lower-row {
