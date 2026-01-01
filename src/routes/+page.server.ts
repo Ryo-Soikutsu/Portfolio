@@ -1,23 +1,26 @@
-import { redirect } from '@sveltejs/kit';
-import config from '$src/helpers/config';
-import * as publicEnvs from '$env/static/public';
+// import { redirect } from '@sveltejs/kit';
+
+// import config from '$src/helpers/config';
+// import * as publicEnvs from '$env/static/public';
+
+// // If the app is configured to use the /index route instead of home, then redirect
+// export function load() {
+//   const shouldLoadIndex = publicEnvs?.PUBLIC_LOAD_INDEX || config?.loadIndex;
+//   if (shouldLoadIndex) {
+//     throw redirect(302, '/index');
+//   }
+// };
+
+import { load as loadProjects } from '$src/routes/projects/+page.server';
+import { load as loadSocials } from '$src/routes/contact/+page.server';
 import type { PageServerLoad } from './$types';
 
-// IMPORTANT:
-// Do not let the root page be prerendered or treated as a static page
-// when it conditionally redirects. That triggers duplicate Vercel
-// functions during the adapter step.
-export const prerender = false;
+export const prerender = true;
 
-export const load: PageServerLoad = () => {
-  const shouldLoadIndex =
-    publicEnvs.PUBLIC_LOAD_INDEX === 'true' ||
-    config?.loadIndex === true;
-
-  if (shouldLoadIndex) {
-    throw redirect(302, '/index');
-  }
-
-  // Return an empty object when not redirecting
-  return {};
+/** @type {import('./$types').PageLoad} */
+export const load = async ({ fetch }: PageServerLoad) => {
+  return {
+    repos: (await loadProjects({ fetch })).repos,
+    socials: (await loadSocials({ fetch })).props,
+  };
 };
