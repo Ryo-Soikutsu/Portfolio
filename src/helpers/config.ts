@@ -63,7 +63,7 @@ const config: SiteConfig = {
       // 'card-border': '1px solid #0000001a',
       // 'home-accent-background': '#2a3367',
       // 'home-accent-foreground': 'var(--foreground)',
-      
+
       // 'home-animated-gradient-outer': '#ffe7f500',
       // 'home-animated-gradient-inner': '#ff8ed05c',
     },
@@ -107,7 +107,7 @@ const config: SiteConfig = {
       ],
       technologies: [ 'TypeScript', 'React Native', 'Azure' ],
     },
-    */    
+    */
     {
       company: 'NYP InfoSec Club (Special Interest Group)',
       companyUrl: '',
@@ -150,7 +150,20 @@ const config: SiteConfig = {
     }
   ],
   projectComplimentaryData: [
-      
+    {
+      name: "Secure-The-Network",
+      description: "A series of blue-team challenges aimed at teaching participants about incident response and digital forensics. Each challenge comes with "
+        + "a backstory and additional details to aid participants with solving the challenge. Each challenge is also integrated with a custom netcat server to "
+        + "allow easy submission of recovered artifacts and intelligence in exchange for the flag. ",
+      featured: true
+    },
+    {
+      name: "TriviaServer",
+      description: " A simple Socat server to allow participants to connect via Netcat, and answer questions in exchange for a flag. Often distributed together with "
+        + "many of my challenges, including the forensics series Secure The Network. ",
+      featured: true,
+      thumbnail: '/content/img/trivia-server-demo.png'
+    }
   ],
   postComplimentaryData: [
 
@@ -170,7 +183,7 @@ const config: SiteConfig = {
       user_id: 'user_K6F041q1dQvz8SJLSOZCR',
       template_params: {},
     },
-    pgpKeyLink: '', 
+    pgpKeyLink: '',
     pgpPublicKey: `-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 xjMEaSbmaBYJKwYBBAHaRw8BAQdAEDH0LqziT1NgW78iGDVej7zTafxbOeyL

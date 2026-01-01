@@ -39,6 +39,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-auto": "^7.0.0",
+    "@sveltejs/adapter-netlify": "^5.2.4",
+    "@sveltejs/adapter-node": "^5.4.0",
+    "@sveltejs/adapter-static": "^3.0.10",
     "d3": "^7.9.0",
     "d3-delaunay": "^6.0.4",
     "typeit": "^8.8.7"

@@ -11,7 +11,7 @@
   import Icon from '$src/components/Icon.svelte';
   import RadioGroup from '$src/components/RadioGroup.svelte';
   import LangBadge from '$src/components/LangBadge.svelte';
-  
+  import { filtered } from '$src/store/BlogStore';
 
   export let data;
   let searchTerm = '';
@@ -21,7 +21,7 @@
   const mirrors = data.mirrors;
   let searchInputRef: any | HTMLElement; // Has to be any, as used in context of <svelte:element>
   let itemsToShow = 20;
-  
+
   let sortBy: string = '';
   let orderBy: string = '';
   let hiddenRepos: string[] = [];
@@ -33,25 +33,28 @@
 
   const getAllLanguages = (repos: Project[]): string[] => {
     const languages = repos.map((repo: Project) => repo.language);
-    const nonNullArr = languages.filter(item => item !== null) as string[];
+    const nonNullArr = languages.filter((item) => item !== null) as string[];
     const frequency: { [key: string]: number } = {};
-    nonNullArr.forEach(item => {
-        frequency[item] = (frequency[item] || 0) + 1;
+    nonNullArr.forEach((item) => {
+      frequency[item] = (frequency[item] || 0) + 1;
     });
-    const result = nonNullArr.sort((a, b) => frequency[b] - frequency[a])
+    const result = nonNullArr
+      .sort((a, b) => frequency[b] - frequency[a])
       .filter((item, index, self) => self.indexOf(item) === index);
     return result || [];
   };
 
   const getAllTopics = (repos: Project[]): string[] => {
     const topics = repos.map((repo: Project) => repo.topics).flat();
-    const nonNullArr = topics.filter(item => item !== null) as string[];
+    const nonNullArr = topics.filter((item) => item !== null) as string[];
     const frequency: { [key: string]: number } = {};
-    nonNullArr.forEach(item => {
-        frequency[item] = (frequency[item] || 0) + 1;
+    nonNullArr.forEach((item) => {
+      frequency[item] = (frequency[item] || 0) + 1;
     });
-    const result = nonNullArr.sort((a, b) => frequency[b] - frequency[a])
-      .filter((item, index, self) => self.indexOf(item) === index).slice(0,20);
+    const result = nonNullArr
+      .sort((a, b) => frequency[b] - frequency[a])
+      .filter((item, index, self) => self.indexOf(item) === index)
+      .slice(0, 20);
     return result || [];
   };
 
@@ -79,100 +82,100 @@
     showFilters = !showFilters;
   };
 
-  const handleSortRadio = (event: { detail: { selected: any; }; }) => {
+  const handleSortRadio = (event: { detail: { selected: any } }) => {
     sortBy = event.detail.selected || '';
     updateFilteredRepos();
   };
-  const handleOrderRadio = (event: { detail: { selected: any; }; }) => {
+  const handleOrderRadio = (event: { detail: { selected: any } }) => {
     orderBy = event.detail.selected || '';
     updateFilteredRepos();
   };
-  const handleHideRepos = (event: { detail: { selected: any; }; }) => {
+  const handleHideRepos = (event: { detail: { selected: any } }) => {
     hiddenRepos = event.detail.selected || [];
     updateFilteredRepos();
   };
   const updateSelectedLanguages = (lang: string) => {
     if (selectedLanguages.includes(lang)) {
-      selectedLanguages = selectedLanguages.filter(item => item !== lang);
+      selectedLanguages = selectedLanguages.filter((item) => item !== lang);
     } else {
       selectedLanguages.push(lang);
     }
     selectedLanguages = [...selectedLanguages];
     updateFilteredRepos();
-  }
-  const updateSelectedTopics = (event: { detail: { selected: any; }; }) => {
+  };
+  const updateSelectedTopics = (event: { detail: { selected: any } }) => {
     selectedTopics = event.detail.selected;
     updateFilteredRepos();
-  }
+  };
 
-  /* Update displayed repositories, based on users search term */
-  const updateFilteredRepos = () => {
-    const doesValInclude = (searchVal: string, dataItem: string | null) => {
-      return (
-        dataItem && dataItem.toLowerCase().includes(searchVal.toLowerCase())
-      );
-    };
+  filteredRepos = (() => {
+    let result: Project[] = [...repos];
 
-    itemsToShow = repos.length; // Show everything while searching
+    const doesValInclude = (searchVal: string, dataItem: string | null) =>
+      !!dataItem?.toLowerCase().includes(searchVal.toLowerCase());
+
+    itemsToShow = repos.length;
 
     // Search by name
-    filteredRepos = repos.filter((repo: Project) => {
-      return doesValInclude(searchTerm, repo.name);
-    });
+    if (searchTerm) {
+      result = result.filter((repo) => doesValInclude(searchTerm, repo.name));
 
-    // If no results, then expand search to include description, language and homepage
-    if (filteredRepos.length === 0) {
-      filteredRepos = repos.filter((repo: Project) => {
-        return (
-          doesValInclude(searchTerm, repo.description) ||
-          doesValInclude(searchTerm, repo.language) ||
-          doesValInclude(searchTerm, repo.homepage)
+      // Expand search if no results
+      if (result.length === 0) {
+        result = [...repos].filter(
+          (repo) =>
+            doesValInclude(searchTerm, repo.description) ||
+            doesValInclude(searchTerm, repo.language) ||
+            doesValInclude(searchTerm, repo.homepage)
         );
-      });
+      }
     }
 
-    // Hide repo types if selected by user (forks and archived projects)
+    // Hide repo types
     if (hiddenRepos.length > 0) {
-      filteredRepos = filteredRepos.filter((repo: Project) => {
+      result = result.filter((repo) => {
         if (hiddenRepos.includes('hide-forks') && repo.isFork) return false;
-        if (hiddenRepos.includes('hide-archived') && repo.archived) return false;
+        if (hiddenRepos.includes('hide-archived') && repo.archived)
+          return false;
         return true;
       });
     }
 
-    // If sort preference set, then sort results
-    if (sortBy) {
-      filteredRepos = filteredRepos.sort((a: Project, b: Project) => {
-        if (sortBy === 'sort-date') {
-          return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
-        } else if (sortBy === 'sort-stars') {
-          return b.stars - a.stars;
-        }
-        return 0;
-      });
+    // Sort (copy-first, immutable)
+    if (sortBy === 'sort-date') {
+      result = [...result].sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      );
+    } else if (sortBy === 'sort-stars') {
+      result = [...result].sort((a, b) => b.stars - a.stars);
     }
 
-    // If language selected, then filter by language
+    // Language filter
     if (selectedLanguages.length > 0) {
-      filteredRepos = filteredRepos.filter((repo: Project) => {
-        return selectedLanguages.includes(repo.language);
-      });
+      result = result.filter((repo) =>
+        selectedLanguages.includes(repo.language)
+      );
     }
 
-    // If topic selected, then filter by topic
+    // Topic filter
     if (selectedTopics.length > 0) {
-      filteredRepos = [...filteredRepos.filter((repo: Project) => {
-        return repo.topics.some((topic: string) => {
-          return selectedTopics.includes(topic);
-        });
-      })];
+      result = result.filter((repo) =>
+        repo.topics.some((topic) => selectedTopics.includes(topic))
+      );
     }
 
-    // If order preference set, then order results
-    if (orderBy) {
-      filteredRepos = orderBy === 'order-asc' ? filteredRepos.reverse() : filteredRepos;
+    // Order
+    if (orderBy === 'order-asc') {
+      result = [...result].reverse();
     }
-  };
+
+    // ⭐ FEATURED ALWAYS ON TOP (FINAL STEP)
+    const featured = result.filter((r) => r.featured);
+    const nonFeatured = result.filter((r) => !r.featured);
+
+    return [...featured, ...nonFeatured];
+  })();
 
   /**
    * Trigger/ cancel search when a keyboard event is triggered
@@ -189,7 +192,9 @@
   };
 
   const isSpan = (repo: Project) =>
-    (repo.featured && browser && window.innerWidth > 768) ? 'grid-row: span 2; grid-column: span 2;' : '';
+    repo.featured && browser && window.innerWidth > 768
+      ? 'grid-row: span 2; grid-column: span 2;'
+      : '';
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -213,102 +218,134 @@
 
     <div class="filter-controls">
       <button on:click={toggleShowFilters} class="filter-toggle-btn">
-        { showFilters ? '⌃ Hide' : '⌄ Show' } Filters
+        {showFilters ? '⌃ Hide' : '⌄ Show'} Filters
       </button>
       <label for="filter-input">Search</label>
       <input
         bind:value={searchTerm}
         type="text"
         id="filter-input"
-        on:keyup={updateFilteredRepos}
         bind:this={searchInputRef}
       />
     </div>
   </div>
 
   {#if showFilters}
-  <div class="advanced-filters" transition:slide>
-    <div class="af af-view-wrap">
-      <label on:click={() => toggleDisplayMode(null)} class="view-mode-label">View</label>
-      <div class="view-mode-options">
-        <button class="display-btn" class:selected="{displayMode === 'grid'}" on:click={() => toggleDisplayMode('grid')}>
-          <Icon name="grid" />
-        </button>
-        <button class="display-btn" class:selected="{displayMode === 'list'}" on:click={() => toggleDisplayMode('list')}>
-          <Icon name="list" />
-        </button>
+    <div class="advanced-filters" transition:slide>
+      <div class="af af-view-wrap">
+        <label on:click={() => toggleDisplayMode(null)} class="view-mode-label"
+          >View</label
+        >
+        <div class="view-mode-options">
+          <button
+            class="display-btn"
+            class:selected={displayMode === 'grid'}
+            on:click={() => toggleDisplayMode('grid')}
+          >
+            <Icon name="grid" />
+          </button>
+          <button
+            class="display-btn"
+            class:selected={displayMode === 'list'}
+            on:click={() => toggleDisplayMode('list')}
+          >
+            <Icon name="list" />
+          </button>
+        </div>
+      </div>
+
+      <RadioGroup
+        on:change={handleSortRadio}
+        groupLabel="Sort by"
+        groupId="sort-by"
+        options={[
+          { id: 'sort-date', label: 'Last Updated', selected: false },
+          { id: 'sort-stars', label: 'Popularity', selected: false },
+        ]}
+      />
+
+      <RadioGroup
+        on:change={handleOrderRadio}
+        groupLabel="Order"
+        groupId="sort-order"
+        options={[
+          { id: 'order-asc', label: 'Ascending', selected: false },
+          { id: 'order-desc', label: 'Descending', selected: false },
+        ]}
+      />
+
+      <RadioGroup
+        on:change={handleHideRepos}
+        groupLabel="Hide repos"
+        groupId="hide-repos"
+        multiple={true}
+        options={[
+          { id: 'hide-forks', label: 'Hide Forks', selected: false },
+          { id: 'hide-archived', label: 'Hide Archived', selected: false },
+        ]}
+      />
+
+      <div class="af af-view-wrap">
+        <label class="view-mode-label">Languages</label>
+        <div class="view-mode-options language-selector">
+          {#each getAllLanguages(repos) as lang}
+            <span
+              on:click={() => updateSelectedLanguages(lang)}
+              class:selectedLang={selectedLanguages.includes(lang)}
+            >
+              <LangBadge language={lang} size={20} />
+            </span>
+          {/each}
+        </div>
+      </div>
+
+      <RadioGroup
+        on:change={updateSelectedTopics}
+        groupLabel="Topics"
+        groupId="select-topics"
+        multiple={true}
+        options={getAllTopics(repos).map((topic) => ({
+          id: topic,
+          label: topic,
+          selected: false,
+        }))}
+      />
+
+      <div class="af cancel-filters">
+        <label class="view-mode-label">Cancel</label>
+        <button class="clear-search" on:click={cancelSearch}
+          >✗ Reset all Filters</button
+        >
       </div>
     </div>
-
-    <RadioGroup
-      on:change={handleSortRadio}
-      groupLabel="Sort by"
-      groupId="sort-by"
-      options={[{ id: 'sort-date', label: 'Last Updated', selected: false }, { id: 'sort-stars', label: 'Popularity', selected: false }]}
-    />
-
-    <RadioGroup
-      on:change={handleOrderRadio}
-      groupLabel="Order"
-      groupId="sort-order"
-      options={[{ id: 'order-asc', label: 'Ascending', selected: false }, { id: 'order-desc', label: 'Descending', selected: false }]}
-    />
-
-    <RadioGroup
-      on:change={handleHideRepos}
-      groupLabel="Hide repos"
-      groupId="hide-repos"
-      multiple={true}
-      options={[{ id: 'hide-forks', label: 'Hide Forks', selected: false }, { id: 'hide-archived', label: 'Hide Archived', selected: false }]}
-    />
-
-    <div class="af af-view-wrap">
-      <label class="view-mode-label">Languages</label>
-      <div class="view-mode-options language-selector">
-        {#each getAllLanguages(repos) as lang}
-        <span on:click={() => updateSelectedLanguages(lang)} class:selectedLang={selectedLanguages.includes(lang)}>
-          <LangBadge language={lang} size={20} />
-        </span>
-        {/each}
-      </div>
-    </div>
-
-    <RadioGroup
-      on:change={updateSelectedTopics}
-      groupLabel="Topics"
-      groupId="select-topics"
-      multiple={true}
-      options={getAllTopics(repos).map(topic => ({ id: topic, label: topic, selected: false }))}
-    />
-
-    <div class="af cancel-filters">
-      <label class="view-mode-label">Cancel</label>
-      <button class="clear-search" on:click={cancelSearch}>✗ Reset all Filters</button>
-    </div>
-  </div>
   {/if}
 
   <div class="project-grid">
     {#each filteredRepos as repo, index}
-      {#if (index < 7 && searchTerm === '' && !showFilters && displayMode !== 'grid')
-        && (browser && window.innerWidth > 768)
-        || displayMode === 'list'
-      }
+      {#if repo.featured}
         <AnimateOnScroll
-        once={true}
-        animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
-        style="grid-column: 1 / -1;"
-      >
-        <ProjectRow {repo} />
+          once={true}
+          animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
+          style="grid-column: 1 / -1;"
+        >
+          <ProjectRow {repo} />
         </AnimateOnScroll>
-      {:else if (index < itemsToShow)}
+      {:else if (index < 3 && searchTerm === '' && !showFilters && displayMode !== 'grid' && browser && window.innerWidth > 768) || displayMode === 'list'}
         <AnimateOnScroll
-        once={true}
-        animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
-        style={isSpan(repo)}
-      >
-        <ProjectCard {repo} />
-      </AnimateOnScroll>
+          once={true}
+          animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
+          style="grid-column: 1 / -1;"
+        >
+          <ProjectRow {repo} />
+        </AnimateOnScroll>
+      {:else if index < itemsToShow}
+        <AnimateOnScroll
+          once={true}
+          animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
+          style={isSpan(repo)}
+        >
+          <ProjectCard {repo} />
+        </AnimateOnScroll>
       {/if}
     {/each}
   </div>
@@ -317,35 +354,37 @@
 {#if repos.length > itemsToShow}
   <div class="load-more">
     <span>Showing {itemsToShow} of {repos.length}+ projects</span>
-    <Button
-      icon="expand-down"
-      click={() => itemsToShow += 20}
-    >Load more</Button>
+    <Button icon="expand-down" click={() => (itemsToShow += 20)}
+      >Load more</Button
+    >
   </div>
 {/if}
 
 {#if repos.length <= itemsToShow && repos.length >= 100}
   <div class="load-more">
-    <span>Due to limitations with the GitHub API, this page only shows a maximum of 100 repositories</span>
+    <span
+      >Due to limitations with the GitHub API, this page only shows a maximum of
+      100 repositories</span
+    >
   </div>
 {/if}
 
 {#if mirrors.length > 0}
-<section class="mirror-list">
-  <div class="title">
-    <Heading level="h2" size="2.5rem">mirrors</Heading>
-  </div>
-  <div class="mirror-grid">
-    {#each mirrors as mirror}
-      <AnimateOnScroll
-        once={true}
-        animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
-      >
-        <MirrorCard {mirror} />
-      </AnimateOnScroll>
-    {/each}
-  </div>
-</section>
+  <section class="mirror-list">
+    <div class="title">
+      <Heading level="h2" size="2.5rem">mirrors</Heading>
+    </div>
+    <div class="mirror-grid">
+      {#each mirrors as mirror}
+        <AnimateOnScroll
+          once={true}
+          animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}
+        >
+          <MirrorCard {mirror} />
+        </AnimateOnScroll>
+      {/each}
+    </div>
+  </section>
 {/if}
 
 <style lang="scss">

@@ -30,6 +30,8 @@ const makeProjectList = async (ghResponse: any): Promise<Project[]> => {
         issues: repo.open_issues_count,
         topics: repo.topics,
         archived: repo.archived,
+        featured: false, // Featured posts will be pushed to the top of the list regardless of placement
+        thumbnail: repo.thumbnail,
         ...projectComplimentaryData, // Append and merge with any hard-coded data from config
       };
     })
