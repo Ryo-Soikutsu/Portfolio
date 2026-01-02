@@ -1,3 +1,4 @@
+/*
 import { redirect } from '@sveltejs/kit';
 
 import config from '$src/helpers/config';
@@ -10,8 +11,9 @@ export function load() {
     throw redirect(302, '/index');
   }
 };
+*/
 
-/*
+
 import { load as loadProjects } from '$src/routes/projects/+page.server';
 import { load as loadSocials } from '$src/routes/contact/+page.server';
 import type { PageServerLoad } from './$types';
@@ -19,11 +21,11 @@ import type { PageServerLoad } from './$types';
 export const prerender = true;
 
 /** @type {import('./$types').PageLoad} */
-/*
+
 export const load = async ({ fetch }: PageServerLoad) => {
   return {
     repos: (await loadProjects({ fetch })).repos,
     socials: (await loadSocials({ fetch })).props,
   };
 };
-*/
+
