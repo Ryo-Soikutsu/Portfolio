@@ -6,6 +6,7 @@ const config: SiteConfig = {
   source: 'https://github.com/Ryo-Soikutsu/Portfolio',
   baseUrl: '',
   initialFeeds: '',
+  loadIndex: true,
   additionalFeeds: [
   ],
 

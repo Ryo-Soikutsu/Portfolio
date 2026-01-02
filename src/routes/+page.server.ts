@@ -17,8 +17,8 @@ import { load as loadSocials } from '$src/routes/contact/+page.server';
 import type { PageServerLoad } from './$types';
 
 export const prerender = true;
-*/
-// /** @type {import('./$types').PageLoad} */
+
+/** @type {import('./$types').PageLoad} */
 /*
 export const load = async ({ fetch }: PageServerLoad) => {
   return {
@@ -26,5 +26,4 @@ export const load = async ({ fetch }: PageServerLoad) => {
     socials: (await loadSocials({ fetch })).props,
   };
 };
-
 */
