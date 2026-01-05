@@ -109,6 +109,16 @@ const config: SiteConfig = {
     },
     */
     {
+      company: 'WorldSkills Competition',
+      companyUrl: '',
+      companyLogo: '/content/img/logo_worldskills.png',
+      jobTitle: 'Competitor',
+      datesWorked: 'Aug 2024 - Present',
+      responsibilities: 'Representing Team Singapore on the global stage for the Cyber Security trade, covering topics '
+        + 'such as penetration testing, network and systems administration, digital forensics and incident response'
+      technologies: ['Bash', 'PowerShell', 'Python', 'PHP']
+    },
+    {
       company: 'NYP InfoSec Club (Special Interest Group)',
       companyUrl: '',
       companyLogo: '/content/img/logo_nyp_infosec.jpg',
