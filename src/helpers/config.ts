@@ -115,7 +115,7 @@ const config: SiteConfig = {
       jobTitle: 'Competitor',
       datesWorked: 'Aug 2024 - Present',
       responsibilities: 'Representing Team Singapore on the global stage for the Cyber Security trade, covering topics '
-        + 'such as penetration testing, network and systems administration, digital forensics and incident response'
+        + 'such as penetration testing, network and systems administration, digital forensics and incident response',
       technologies: ['Bash', 'PowerShell', 'Python', 'PHP']
     },
     {
