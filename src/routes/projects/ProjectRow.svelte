@@ -36,7 +36,7 @@
     <!-- Project description -->
     <p class="repo-description">
       {#if repo.description}
-        {repo.description}
+        {@html repo.description}
       {:else}
         <i>A mysterious project, without a description</i>
       {/if}

@@ -173,6 +173,8 @@
     // ⭐ FEATURED ALWAYS ON TOP (FINAL STEP)
     const featured = result.filter((r) => r.featured);
     const nonFeatured = result.filter((r) => !r.featured);
+    console.log(featured);
+    console.log(nonFeatured);
 
     return [...featured, ...nonFeatured];
   })();
@@ -330,7 +332,7 @@
         >
           <ProjectRow {repo} />
         </AnimateOnScroll>
-      {:else if (index < 3 && searchTerm === '' && !showFilters && displayMode !== 'grid' && browser && window.innerWidth > 768) || displayMode === 'list'}
+      {:else if (index < 4 && searchTerm === '' && !showFilters && displayMode !== 'grid' && browser && window.innerWidth > 768) || displayMode === 'list'}
         <AnimateOnScroll
           once={true}
           animation={'fade-in 1s cubic-bezier(0.4, 0.6, 0.5, 1.000) both'}

@@ -169,23 +169,10 @@ const config: SiteConfig = {
     },
     {
       name: "TriviaServer",
-      description: "A simple Socat server to allow participants to connect via Netcat, and answer questions in exchange for a flag. Often distributed together with "
+      description: " A simple Socat server to allow participants to connect via Netcat, and answer questions in exchange for a flag. Often distributed together with "
         + "many of my challenges, including the forensics series Secure The Network. ",
       featured: true,
       thumbnail: '/content/img/trivia-server-demo.png'
-    },
-    {
-      name: "Portfolio",
-      description: "A digital portfolio to showcase my best projects and achievements, as well as share more about myself. Also provides contact details if you "
-        + "wish to contact me for opportunities. Original website was forked from <a href='https://github.com/Lissy93/my-website'>here</a>.",
-      featured: true
-    },
-    {
-      name: "Northland-Blog",
-      description: "A central blog to share CTF writeups and challenge creation writeups. Also includes tutorials and documentations for custom tools (e.g. TriviaServer) "
-        + "and behind-the-scenes for challenge creation. You can visit the GitBook site at <a href='https://blog.northland.dev'>blog.northland.dev</a>.",
-      featured: true,
-      thumbnail: '/content/img/blog-live.png'
     }
   ],
   postComplimentaryData: [
@@ -328,14 +315,14 @@ C58S6/KZz8qMvMWOowSPmugMIxLhLxcF
     ],
     'Operating Systems': [
       {
-        tool: 'Arch Linux',
+        tool: 'Arch Linux (Daily Driver)',
         source: ['https://archlinux.org/']
       },
       {
-        tool: 'Windows Server'
+        tool: 'Windows Server 2019/2022'
       },
       {
-        tool: 'Windows Desktop'
+        tool: 'Windows 10/11'
       },
       {
         tool: 'CentOS',
