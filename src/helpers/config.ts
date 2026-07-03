@@ -175,10 +175,10 @@ const config: SiteConfig = {
       thumbnail: '/content/img/trivia-server-demo.png'
     },
     {
-      name: "Portfolio",
-      description: "A digital portfolio to showcase my best projects and achievements, as well as share more about myself. Also provides contact details if you "
-        + "wish to contact me for opportunities. Original website was forked from <a href='https://github.com/Lissy93/my-website'>here</a>.",
-      featured: true
+      name: "Heartbleed",
+      description: "Demonstration of the Heartbleed CVE (CVE-2014-0160), including lab setup instructions and source code to build your own Heartbleed lab for educational purposes ",
+      featured: true,
+      thumbnail: '/content/img/heartbleed.png'
     },
     {
       name: "Northland-Blog",
